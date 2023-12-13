@@ -1,0 +1,72 @@
+  // Declaracion de variables.
+let usuarios = [];
+let continuar = '';
+let intentos = 1;
+let encontrado = false;
+let opcion = 0;
+let index = 0;
+
+//Bucle While que permite registrar multiples usuarios y contraseña, y finaliza cuando el usuario ingresa n para no continuar.
+while(continuar != 'n'){
+    let nombre = prompt("Por favor ingrese cual desea que sea su nombre de usuario: ");
+    let password= prompt("Por favor ingrese cual desea que sea su contraseña: ");
+    usuarios.push([nombre, password, 0]);
+continuar = prompt('Escriba n para dejar de crear usuarios y seguir con el programa, o presione cualquier otra tecla (cono enter) para seguir ingresando usuarios: ')
+}
+
+// Numero de intentos al ingresar para verificar si el usuario y contraseña coinciden segun la informacion proporcionada y salir del programa al llegar al numero estimado de intentos.
+while (intentos <= 3) {
+    let nombre = prompt("Por favor ingrese su usuario para ingresar a la aplicacion, intento #" + intentos + ': ');
+    let password = prompt("Por favor ingrese su contraseña para ingresar a la aplicacion:  ");
+    for (usuario of usuarios) {
+        if (usuario[0] == nombre && usuario[1] == password) {
+            encontrado = true;
+            break;
+        }
+        index = index + 1;
+    }
+    if (encontrado == false) {
+        console.log('Usuario o contraseña no encontrada.');
+    } else {
+        break;
+    }
+    intentos = intentos + 1;
+}
+if (encontrado == false) {
+    console.log('Llego al limite de intentos, no puede ingresar a la aplicacion.');
+} else {
+    console.log('Bienvenido a la aplicacion!');
+}
+//Bucle que muestra el menu de opciones hasta que el usuario decida salir seleccionando la opcion 5.
+while (opcion != 5) {
+    console.log('MENU PRINCIPAL');
+    console.log('1. Consultar saldo.');
+    console.log('2. Depositar.');
+    console.log('3. Retirar dinero.');
+    console.log('4. Manual de usuario.');
+    console.log('5. Salir.')
+    opcion = prompt('Por favor seleccione un numero de opcion: ');
+    // Opciones al precionar un numero en el menu sumando, restando y consultando el saldo.
+    if (opcion == 1) {
+        console.log('El saldo de su cuenta es: ' + usuarios[index][2]);
+    }
+    if (opcion == 2) {
+        let monto = prompt('Por favor ingrese la cantidad a depositar: ');
+        usuarios[index][2] = Number(usuarios[index][2]) + Number(monto);
+    }
+    if(opcion ==3) {
+        let monto =prompt("Por favor ingrese la cantidad que desea retirar: ");
+        if(monto < usuarios[index][2]) {
+            usuarios[index][2] = Number(usuarios[index][2]) - Number(monto);
+        } else{
+            console.log("Su saldo no es suficiente lo siento: ");
+        }
+    }
+    if(opcion ==4){
+        console.log('Como ejecutar el cajero automatico:');
+        console.log('MANUAL DE USUARIO Automatic Teller Machine Primero el programa le pedirá que cree un usuario y una contraseña, puede crear los usuarios y contraseñas que desee presionando cualquier tecla y hasta que presione "n" cuando le indique podrá seguir con el programa, Luego le pedirá de nuevo que inicie sesión con una de los usuarios y contraseñas que creó al principio, tendrá tres intentos para ingresar su usuario y contraseña si falla las tres veces finalizará con el programa de lo contrario podrá seguir con el programa. Luego se le mostrará en pantalla el menú principal en el podrá encotrar, consultar saldo, depositar, retirar dinero, manual de usuario y salir estos estarán identificados con un numero de opcion, coloque el numero de opcion que desee y este le mostrará la información con base a lo que eligió podrá ingresar una opción de número cuantas veces desee hasta que seleccione salir. Si la opción que eligió es consultar saldo (numero 1) le mostrará cuánto dinero tiene su cuenta actualmente. Depositar (número 2) este le pedirá la cantidad que desea depositar y podrá ver sus ingresos desde consultar saldo,  Retirar dinero (numero 3) este le pedirá cuánto dinero desea retirar y también puede consultar su egresos desde consultar saldo. Por otra parte si su opción fue menu principal (número 4) este le mostrara todo lo que debe saber sobre el cajero automático y  como utilizarlo también le podra ayudar por si tiene algún inconveniente con el programa. La opción salir (número 5) este finalizara con el programa. ');
+    }
+}
+if (opcion == 5) {
+    console.log('Gracias por usar nuestro cajero automatico, adios.')
+}
